@@ -6,14 +6,43 @@ html, body {
    width: 100%;
    margin: 0px;
    padding: 0px;
+   font: 1em arial, sans-serif;
+   color: #333333;
+}
+
+div {
+   display: block;
+   margin: 0px;
+   padding: 0px;
 }
 
 .main-container {
    position: relative;
    height: 100%;
    width: 100%;
-   margin: 0px;
-   padding: 0px;
+}
+
+.heder {
+   position: absolute;
+   top: 0px;
+   right: 0px;
+   left: 0px;
+   height: 80px;
+   border-bottom: 1px solid #333333;
+}
+
+.body {
+   position: absolute;
+   top: 81px;
+   right: 0px;
+   left: 0px;
+   bottom: 0px;
+}
+
+.title {
+   font-size: 3em;
+   font-weight: bold;
+   color: #3366ff;
 }
 
 .login-form {
@@ -30,12 +59,15 @@ input.bottomline {
    border-bottom: 1px solid black;
 }
 
+input.invisible {
+   border: 0px;
+}
+
 .row {
    display: block;
-   padding: 6px;
-   margin: 0px;
    width: auto;
    min-height: 30px;
+   padding: 6px;
 }
 
 .row.center {
@@ -46,5 +78,15 @@ input.bottomline {
    display: inline-block;
    vertical-align: text-bottom;
    padding: 4px;
-   margin: 0px;
+}
+.cell.left {
+   float: left;
+}
+
+.cell.right {
+   float: right;
+}
+
+.clear {
+   clear: both;
 }
