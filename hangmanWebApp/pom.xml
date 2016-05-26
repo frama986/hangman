@@ -83,7 +83,7 @@
    </dependencies>
 
    <build>
-      <finalName>HangmanWebApp</finalName>
+      <finalName>hangmanWebApp</finalName>
       <sourceDirectory>src</sourceDirectory>
       <plugins>
          <plugin>
@@ -100,6 +100,7 @@
             <configuration>
                <warSourceDirectory>WebContent</warSourceDirectory>
                <failOnMissingWebXml>false</failOnMissingWebXml>
+               <outputDirectory>C:\Users\f.malatto\Documents\Personali\Applicazioni\apache-tomcat-8.0.35\webapps</outputDirectory>
             </configuration>
          </plugin>
       </plugins>

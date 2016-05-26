@@ -17,8 +17,34 @@ html, body {
 }
 
 .login-form {
+   position: relative;
+   top: 40%;
    margin: auto;
-    width: 60%;
-    border: 3px solid #73AD21;
-    padding: 10px;
+   width: 60%;
+   border: 3px solid #0080ff;
+   padding: 10px;
+}
+
+input.bottomline {
+   border: 0px;
+   border-bottom: 1px solid black;
+}
+
+.row {
+   display: block;
+   padding: 6px;
+   margin: 0px;
+   width: auto;
+   min-height: 30px;
+}
+
+.row.center {
+   text-align: center;
+}
+
+.cell {
+   display: inline-block;
+   vertical-align: text-bottom;
+   padding: 4px;
+   margin: 0px;
 }

@@ -14,8 +14,12 @@
 <body>
    <div class="main-container">
       <div class="login-form">
-         <form action="">
-            <div>Hello ${username}</div>
+         <form action="login" method="post">
+            <div class="row center">
+               <div class="cell">Write your name:</div>
+               <div class="cell"><input type="text" name="username" value="" class="bottomline"></div></div>
+            <div class="row center">
+            <div class="cell"><input type="submit" value="Enter"></div></div>
          </form>
       </div>
    </div>
