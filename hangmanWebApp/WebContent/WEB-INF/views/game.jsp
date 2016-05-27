@@ -52,7 +52,9 @@
                   <span id="displayedWord">${gameModel.displayedWord}</span>
                </div>
             </div>
-            <div class="row"></div>
+            <div class="row">
+               <div class="cell"><span id="feedback"></span></div>
+            </div>
             <div class="row">
                <div class="cell">
                   <input type="text" name="guessLetter" id="guessLetter"

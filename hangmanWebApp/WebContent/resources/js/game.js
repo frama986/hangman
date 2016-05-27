@@ -25,15 +25,12 @@ function initGameModel() {
    };
 }
 
-
-
 function verifyInput(e) {
    var code = e.keyCode || e.which;
    var chr = $(this).val();
 
    if(code == 13 && chr != "") {
-      // submit the letter
-      alert('submit');
+      gessTheWord(chr);
       return;
    }
    //65-90
@@ -44,4 +41,37 @@ function verifyInput(e) {
    e.preventDefault();
    e.stopPropagation();
    return null;
+}
+
+function gessTheWord(letter) {
+   
+   var obj = {letter : letter};
+   
+   $.ajax({
+      type : "POST",
+      url : "guess",
+      contentType : "application/json",
+      data : JSON.stringify(obj),
+      dataType : 'json',
+      timeout : 100000,
+      success : function(data) {
+         manageReturn(data)
+      },
+      error : function(e) {
+         $('#feedback').html('Error!');
+      }
+   });
+}
+
+//data {letter, model outcome}
+function manageReturn(data) {
+   
+   if(data.outcome)
+      displayResult('Guessed :)');
+   else
+      displayResult('Not Guessed :(');
+}
+
+function displayResult(msg) {
+   $('#feedback').html(msg);
 }

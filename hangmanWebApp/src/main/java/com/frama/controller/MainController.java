@@ -43,6 +43,7 @@ public class MainController {
       logger.debug("[welcome] Username : {}", sessionUser);
       
       GameModel gm = new GameModel("BRIDGE", 6);
+      session.setAttribute("gameModel", gm);
       
       model.addAttribute("username", sessionUser);
       model.addAttribute("gameModel", gm);
