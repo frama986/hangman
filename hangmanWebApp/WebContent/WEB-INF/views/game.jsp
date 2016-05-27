@@ -66,7 +66,7 @@
             </div>
          </div>
       </div>
-      <div class="row">
+      <div class="row center">
          <div class="cell center">
             Misses: <span id="missesText">${gameModel.misses}</span>
          </div>

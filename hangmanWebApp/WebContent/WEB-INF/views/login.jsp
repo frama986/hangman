@@ -25,7 +25,7 @@
                <div class="cell">Write your name:</div>
                <div class="cell">
                   <input type="text" name="username" value=""
-                     class="bottomline">
+                     class="bottomline" autofocus="autofocus">
                </div>
             </div>
             <div class="row center">
