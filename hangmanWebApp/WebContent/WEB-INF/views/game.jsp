@@ -14,50 +14,63 @@
 
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/lib/jquery-1.12.4.min.js" />"></script>
-<script src="<c:url value="/resources/js/welcome.js" />"></script>
+<script src="<c:url value="/resources/js/game.js" />"></script>
 </head>
 <body>
    <div class="main-container">
-      <div class="heder">
-         <div class="row">
-            <div class="cell">
-               <span class="title">Hangman Game</span>
-            </div>
-            <div class="cell">Welcome ${username}</div>
+
+      <input type="hidden" name="attempts" id="attempts"
+         value="${gameModel.attempts}"> <input type="hidden"
+         name="misses" id="misses" value="${gameModel.misses}">
+      <input type="hidden" name="errors" id="errors"
+         value="${gameModel.errors}"> <input type="hidden"
+         name="displayedWord" id="displayedWord"
+         value="${gameModel.displayedWord}"> <input
+         type="hidden" name="username" id="username" value="${username}">
+
+      <div class="row">
+         <div class="row title">
+            <div class="cell">Hangman Game</div>
          </div>
       </div>
-      <div class="body">
-         <div class="row">
-            <div class="cell"></div>
+      <div class="row">
+         <div class="cell">Welcome ${username}</div>
+      </div>
+      <div class="row center">
+         <div class="cell">
+            Attempts: <span id="attemptsText">${gameModel.attempts}</span>
          </div>
-         <div class="row">
-            <div class="cell left">
-               Attempts: <input type="text" id="remAttempts"
-                  class="invisible" value="${remAttempts}">
+         <div class="cell">
+            Errors: <span id="attemptsText">${gameModel.errors}</span>
+         </div>
+      </div>
+      <div class="row center">
+         <div class="cell center blue-border">
+            <div class="row">
+               <div class="cell">What’s the word?</div>
+               <div class="cell">
+                  <span id="displayedWord">${gameModel.displayedWord}</span>
+               </div>
             </div>
-            <div class="cell right">
-               Errors: <input type="text" id="usedAttemps"
-                  class="invisible" value="${usedAttemps}">
+            <div class="row"></div>
+            <div class="row">
+               <div class="cell">
+                  <input type="text" name="guessLetter" id="guessLetter"
+                     size="1" maxlength="1"
+                     class="bottomline two-letter uppercase"
+                     autofocus="autofocus">
+               </div>
+               <div class="cell">
+                  <input type="button" id="guessButton" value="Guess!">
+               </div>
             </div>
          </div>
-         <div class="row center">
-            <div class="cell">What’s the word?</div>
-         </div>
-         <div class="row center">
-            <div class="cell">_ _ _ _ _ _ _</div>
-         </div>
-         <div class="row">
-            <div class="cell">
-               Guess: <input type="text" id="guess" class="invisible"
-                  value="${guess}">
-            </div>
-            <div class="cell">
-               Misses: <input type="text" id="misses" class="invisible"
-                  value="${misses}">
-            </div>
+      </div>
+      <div class="row">
+         <div class="cell center">
+            Misses: <span id="missesText">${gameModel.misses}</span>
          </div>
       </div>
    </div>
-
 </body>
 </html>

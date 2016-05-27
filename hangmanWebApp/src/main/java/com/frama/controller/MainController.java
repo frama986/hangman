@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.frama.model.GameModel;
+
 @Controller
 public class MainController {
    
    private static final Logger logger = LoggerFactory.getLogger(MainController.class);
    
    private static final String VIEW_GAME = "game";
-   private static final String VIEW_INDEX = "index";
    private static final String VIEW_LOGIN = "login";
    
    /**
@@ -41,11 +42,10 @@ public class MainController {
       
       logger.debug("[welcome] Username : {}", sessionUser);
       
+      GameModel gm = new GameModel("BRIDGE", 6);
+      
       model.addAttribute("username", sessionUser);
-      model.addAttribute("remAttempts", "6");
-      model.addAttribute("usedAttemps", "0");
-      model.addAttribute("guess", "");
-      model.addAttribute("misses", "");
+      model.addAttribute("gameModel", gm);
 
       return VIEW_GAME;
    }
