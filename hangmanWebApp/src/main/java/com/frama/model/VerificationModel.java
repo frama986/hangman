@@ -5,7 +5,7 @@ public class VerificationModel {
    private String letter;
 
    public String getLetter() {
-      return letter;
+      return letter.toUpperCase();
    }
 
    public void setLetter(String letter) {

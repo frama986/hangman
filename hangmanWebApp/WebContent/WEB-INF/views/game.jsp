@@ -15,18 +15,10 @@
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/lib/jquery-1.12.4.min.js" />"></script>
 <script src="<c:url value="/resources/js/game.js" />"></script>
+<script src="<c:url value="/resources/js/tools.js" />"></script>
 </head>
 <body>
    <div class="main-container">
-
-      <input type="hidden" name="attempts" id="attempts"
-         value="${gameModel.attempts}"> <input type="hidden"
-         name="misses" id="misses" value="${gameModel.misses}">
-      <input type="hidden" name="errors" id="errors"
-         value="${gameModel.errors}"> <input type="hidden"
-         name="displayedWord" id="displayedWord"
-         value="${gameModel.displayedWord}"> <input
-         type="hidden" name="username" id="username" value="${username}">
 
       <div class="row">
          <div class="row title">
@@ -38,10 +30,10 @@
       </div>
       <div class="row center">
          <div class="cell">
-            Attempts: <span id="attemptsText">${gameModel.attempts}</span>
+            Attempts: <span id="attempts"></span>
          </div>
          <div class="cell">
-            Errors: <span id="attemptsText">${gameModel.errors}</span>
+            Errors: <span id="errors"></span>
          </div>
       </div>
       <div class="row center">
@@ -49,11 +41,16 @@
             <div class="row">
                <div class="cell">What’s the word?</div>
                <div class="cell">
-                  <span id="displayedWord">${gameModel.displayedWord}</span>
+                  <span id="hiddenWord"></span>
                </div>
             </div>
             <div class="row">
-               <div class="cell"><span id="feedback"></span></div>
+               <div class="cell">
+                  <span id="feedback" class="feedback hidden"></span> <span
+                     id="feedback-ok" class="feedback hidden">Good
+                     :)</span> <span id="feedback-ko" class="feedback hidden">Wrong
+                     :(</span>
+               </div>
             </div>
             <div class="row">
                <div class="cell">
@@ -70,7 +67,7 @@
       </div>
       <div class="row center">
          <div class="cell center">
-            Misses: <span id="missesText">${gameModel.misses}</span>
+            Misses: <span id="misses">${gameModel.misses}</span>
          </div>
       </div>
    </div>

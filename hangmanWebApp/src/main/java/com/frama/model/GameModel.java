@@ -1,34 +1,52 @@
 package com.frama.model;
 
 public class GameModel {
-   
+
    public GameModel() {}
-   
+
    public GameModel(String wordToGuess, Integer maxAttempts) {
       this.wordToGuess = wordToGuess;
+      this.maxAttempts = maxAttempts;
       this.attempts = maxAttempts;
-      this.wordSize = wordToGuess.length();
       this.errors = 0;
-      this.displayedWord = initDisplayedWord(this.wordSize);
       this.misses = "";
-      this.hits = "";
+      this.guesses = "";
+      this.wordSize = this.wordToGuess.length();
+      this.hiddenWord = new String[this.wordSize];
+      for(int i = 0; i < this.wordSize; i++) {
+         this.hiddenWord[i] = "_";
+      }
    }
-   
+
+   public GameModel(String wordToGuess, Integer wordSize, Integer maxAttempts, Integer attempts, Integer errors,
+         String[] hiddenWord, String misses, String guess) {
+      this.wordToGuess = wordToGuess;
+      this.wordSize = wordSize;
+      this.maxAttempts = maxAttempts;
+      this.attempts = attempts;
+      this.errors = errors;
+      this.hiddenWord = hiddenWord;
+      this.misses = misses;
+      this.guesses = guess;
+   }
+
    private String wordToGuess;
-   
+
    private Integer wordSize;
-   
+
+   private Integer maxAttempts;
+
    private Integer attempts;
-   
+
    private Integer errors;
-   
-   private String displayedWord;
-   
+
+   private String[] hiddenWord;
+
    private String misses;
-   
-   private String hits;
-   
-   
+
+   private String guesses;
+
+
    public String getWordToGuess() {
       return wordToGuess;
    }
@@ -43,6 +61,14 @@ public class GameModel {
 
    public void setWordSize(Integer wordSize) {
       this.wordSize = wordSize;
+   }
+
+   public Integer getMaxAttempts() {
+      return maxAttempts;
+   }
+
+   public void setMaxAttempts(Integer maxAttempts) {
+      this.maxAttempts = maxAttempts;
    }
 
    public Integer getAttempts() {
@@ -61,12 +87,12 @@ public class GameModel {
       this.errors = errors;
    }
 
-   public String getDisplayedWord() {
-      return displayedWord;
+   public String[] getHiddenWord() {
+      return hiddenWord;
    }
 
-   public void setDisplayedWord(String displayedWord) {
-      this.displayedWord = displayedWord;
+   public void setHiddenWord(String[] hiddenWord) {
+      this.hiddenWord = hiddenWord;
    }
 
    public String getMisses() {
@@ -77,23 +103,35 @@ public class GameModel {
       this.misses = misses;
    }
 
-   public String getHits() {
-      return hits;
+   public String getGuesses() {
+      return guesses;
    }
 
-   public void setHits(String hits) {
-      this.hits = hits;
+   public void setGuesses(String guesses) {
+      this.guesses = guesses;
    }
-
-   private static String initDisplayedWord(int size) {
-      String tmp = "";
-      
-      for(int i = 0; i < size; i++) {
-         if(i > 0)
-            tmp += " ";
-         tmp += "_";
-      }
-      
-      return tmp;
+   
+   public void increaseErrors() {
+      this.errors++;
+   }
+   
+   public void decreaseAttempts() {
+      this.attempts--;
+   }
+   
+   public void updateMisses(String letter) {
+      if(this.misses.length() > 0)
+         this.misses += " ";
+      this.misses += letter;
+   }
+   
+   public void updateGuesses(String letter) {
+      if(this.guesses.length() > 0)
+         this.guesses += " ";
+      this.guesses += letter;
+   }
+   
+   public static GameModel resetModel(GameModel thisModel) {
+      return new GameModel(thisModel.getWordToGuess(), thisModel.getAttempts());
    }
 }

@@ -21,6 +21,10 @@ input {
    color: #333333;
 }
 
+.hidden {
+   display: none;
+}
+
 .main-container {
    position: relative;
    height: 100%;

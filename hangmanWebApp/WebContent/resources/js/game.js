@@ -2,7 +2,7 @@
  * 
  */
 
-var gameModel = {};
+var gameModel = null;
 
 $(function() {
    
@@ -12,17 +12,60 @@ $(function() {
 });
 
 function initGameModel() {
+   var obj = {}
+   loadGame(obj);
+}
 
-   gameModel = {
+function loadGame(obj) {
+   
+   $.ajax({
+      type : "POST",
+      url : "loadgame",
+      contentType : "application/json",
+      data : JSON.stringify(obj),
+      dataType : 'json',
+      timeout : 100000,
+      success : function(data) {
+         initializeModel(data);
+      },
+      error : function(e) {
+         displayError('An error occurred!');
+      }
+   });
+}
 
-         wordToGuess : "", 
-         wordSize : "",
-         attempts : "",
-         errors : "",
-         displayedWord : "",
-         misses : "",
-         hits : ""
-   };
+function newGame() {
+   
+   $.ajax({
+      type : "POST",
+      url : "newgame",
+      contentType : "application/json",
+      data : "{}",
+      dataType : 'json',
+      timeout : 100000,
+      success : function(data) {
+         initializeModel(data);
+      },
+      error : function(e) {
+         displayError('An error occurred!');
+      }
+   });
+}
+
+function initializeModel(data) {
+   gameModel = {};
+   $.extend(gameModel, data);
+   
+   updatePageFileds();
+}
+
+function updatePageFileds() {
+   $('#attempts').html(gameModel.attempts);
+   $('#errors').html(gameModel.errors);
+   $('#hiddenWord').html(gameModel.hiddenWord.join(" "));
+   $('#misses').html(gameModel.misses);
+   
+   $('#guessLetter').val('');
 }
 
 function verifyInput(e) {
@@ -55,23 +98,55 @@ function gessTheWord(letter) {
       dataType : 'json',
       timeout : 100000,
       success : function(data) {
-         manageReturn(data)
+         manageReturn(data);
       },
       error : function(e) {
-         $('#feedback').html('Error!');
+         displayError('An error occurred!');
       }
    });
 }
 
-//data {letter, model outcome}
+/**
+ * Manages the return from the letter verification
+ * @param data : object {letter, model, outcome}
+ */
 function manageReturn(data) {
-   
-   if(data.outcome)
-      displayResult('Guessed :)');
-   else
-      displayResult('Not Guessed :(');
+   updateGameModel(data.model);
+   if(data.outcome) {
+      displayResult('#feedback-ok');
+   }
+   else {
+      displayResult('#feedback-ko');
+   }
+
+   if(data.gameOver) {
+      var wtg = data.model.wordToGuess;
+      revealHiddenWord(wtg);
+      if(data.solved) {
+         alert('Congratulations! You have guessed the hidden word ' + wtg);
+      }
+      else {
+         alert('Game Over. The hidden word is ' + wtg);
+      }
+      newGame();
+   }
 }
 
-function displayResult(msg) {
+function updateGameModel(model) {
+   initializeModel(model);
+}
+
+function displayResult(id) {
+   $('.feedback').hide(1);
+   $(id).show().delay(2000).fadeOut();
+}
+
+function displayError(msg) {
    $('#feedback').html(msg);
+   $('.feedback').hide(0);
+   $('#feedback').show();
+}
+
+function revealHiddenWord(wtg) {
+   $('#hiddenWord').html(wtg.split('').join(' '));
 }

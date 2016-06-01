@@ -6,6 +6,10 @@ public class VerificationResponseModel {
    
    private Boolean outcome;
    
+   private Boolean gameOver;
+   
+   private Boolean solved;
+   
    private String letter;
 
    public GameModel getModel() {
@@ -22,6 +26,22 @@ public class VerificationResponseModel {
 
    public void setOutcome(Boolean outcome) {
       this.outcome = outcome;
+   }
+
+   public Boolean getGameOver() {
+      return gameOver;
+   }
+
+   public void setGameOver(Boolean gameOver) {
+      this.gameOver = gameOver;
+   }
+
+   public Boolean getSolved() {
+      return solved;
+   }
+
+   public void setSolved(Boolean solved) {
+      this.solved = solved;
    }
 
    public String getLetter() {

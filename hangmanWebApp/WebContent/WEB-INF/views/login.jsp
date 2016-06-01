@@ -10,6 +10,7 @@
 <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 <script src="<c:url value="/resources/lib/jquery-1.12.4.min.js" />"></script>
 <script src="<c:url value="/resources/js/welcome.js" />"></script>
+<script src="<c:url value="/resources/js/tools.js" />"></script>
 </head>
 <body>
    <div class="main-container">

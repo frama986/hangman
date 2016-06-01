@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.frama.model.GameModel;
-
 @Controller
 public class MainController {
    
@@ -42,11 +40,7 @@ public class MainController {
       
       logger.debug("[welcome] Username : {}", sessionUser);
       
-      GameModel gm = new GameModel("BRIDGE", 6);
-      session.setAttribute("gameModel", gm);
-      
       model.addAttribute("username", sessionUser);
-      model.addAttribute("gameModel", gm);
 
       return VIEW_GAME;
    }
