@@ -35,7 +35,7 @@ input {
    position: relative;
    margin: auto;
    width: 60%;
-   border: 3px solid #0080ff;
+   border: 3px solid #0057e7;
    padding: 10px;
 }
 
@@ -65,12 +65,16 @@ input.two-letter {
 .row {
    display: block;
    width: auto;
-   min-height: 40px;
+   min-height: 30px;
    padding: 6px;
 }
 
 .row.center {
    text-align: center;
+}
+
+.row.high {
+   min-height: 50px;
 }
 
 .cell {
@@ -111,9 +115,37 @@ input.two-letter {
 }
 
 .blue-border {
-   border: 3px solid #0080ff;
+   border: 3px solid #0057e7;
+}
+
+.red-border {
+   border: 3px solid #d62d20;
+}
+
+.green-border {
+   border: 3px solid #008744;
+}
+
+.yellow-border {
+   border: 3px solid #ffa700;
 }
 
 .grey-border-bottom {
    border-bottom: 2px solid #333333;
+}
+
+.green {
+   color: #008744;
+}
+
+.red {
+   color: #d62d20;
+}
+
+.red-border-highlight {
+   border: 3px solid #d62d20 !important;
+}
+
+.green-border-highlight {
+   border: 3px solid #008744 !important;
 }

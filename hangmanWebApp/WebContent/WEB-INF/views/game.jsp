@@ -27,6 +27,7 @@
       </div>
       <div class="row">
          <div class="cell">Welcome ${username}</div>
+         <div class="cell"><input type="button" id="newGameButton" value="New Game"></div>
       </div>
       <div class="row center">
          <div class="cell">
@@ -37,18 +38,18 @@
          </div>
       </div>
       <div class="row center">
-         <div class="cell center blue-border">
+         <div id="central-container" class="cell center blue-border">
             <div class="row">
                <div class="cell">What’s the word?</div>
                <div class="cell">
                   <span id="hiddenWord"></span>
                </div>
             </div>
-            <div class="row">
+            <div class="row high">
                <div class="cell">
-                  <span id="feedback" class="feedback hidden"></span> <span
-                     id="feedback-ok" class="feedback hidden">Good
-                     :)</span> <span id="feedback-ko" class="feedback hidden">Wrong
+                  <span id="feedback" class="feedback hidden red"></span> <span
+                     id="feedback-ok" class="feedback hidden green">Good
+                     :)</span> <span id="feedback-ko" class="feedback hidden red">Wrong
                      :(</span> <span id="feedback-already-used"
                      class="feedback hidden">Already used</span>
                </div>

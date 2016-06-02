@@ -1,7 +1,27 @@
 package com.frama.model;
 
-public class GameModel {
+import java.io.Serializable;
 
+public class GameModel implements Serializable{
+   
+   private static final long serialVersionUID = -4911780008466057971L;
+
+   private String wordToGuess;
+
+   private Integer wordSize;
+
+   private Integer maxAttempts;
+
+   private Integer attempts;
+
+   private Integer errors;
+
+   private String[] hiddenWord;
+
+   private String misses;
+
+   private String guesses;
+   
    public GameModel() {}
 
    public GameModel(String wordToGuess, Integer maxAttempts) {
@@ -29,22 +49,6 @@ public class GameModel {
       this.misses = misses;
       this.guesses = guess;
    }
-
-   private String wordToGuess;
-
-   private Integer wordSize;
-
-   private Integer maxAttempts;
-
-   private Integer attempts;
-
-   private Integer errors;
-
-   private String[] hiddenWord;
-
-   private String misses;
-
-   private String guesses;
 
 
    public String getWordToGuess() {

@@ -5,19 +5,20 @@
 var gameModel = null;
 
 $(function() {
-   
+
    initGameModel();
-   
+
    $('#guessLetter').keydown(verifyInput);
+   $('#newGameButton').click(newGame);
 });
 
 function initGameModel() {
-   var obj = {}
+   var obj = {};
    loadGame(obj);
 }
 
 function loadGame(obj) {
-   
+
    $.ajax({
       type : "POST",
       url : "loadgame",
@@ -29,13 +30,16 @@ function loadGame(obj) {
          initializeModel(data);
       },
       error : function(e) {
-         displayError('An error occurred!');
+         displayError(e.responseJSON);
       }
    });
 }
 
 function newGame() {
-   
+
+   $('.feedback').hide();
+   $('#guessLetter').focus();
+
    $.ajax({
       type : "POST",
       url : "newgame",
@@ -47,7 +51,7 @@ function newGame() {
          initializeModel(data);
       },
       error : function(e) {
-         displayError('An error occurred!');
+         displayError(e.responseJSON);
       }
    });
 }
@@ -55,7 +59,7 @@ function newGame() {
 function initializeModel(data) {
    gameModel = {};
    $.extend(gameModel, data);
-   
+
    updatePageFileds();
 }
 
@@ -64,7 +68,7 @@ function updatePageFileds() {
    $('#errors').html(gameModel.errors);
    $('#hiddenWord').html(gameModel.hiddenWord.join(" "));
    $('#misses').html(gameModel.misses);
-   
+
    $('#guessLetter').val('');
 }
 
@@ -87,7 +91,7 @@ function verifyInput(e) {
          displayResult('#feedback-already-used');
       }
    }
-   
+
    e.preventDefault();
    e.stopPropagation();
    return null;
@@ -102,9 +106,9 @@ function isNewLetter(letter) {
 }
 
 function gessTheWord(letter) {
-   
+
    var obj = {letter : letter};
-   
+
    $.ajax({
       type : "POST",
       url : "guess",
@@ -116,7 +120,7 @@ function gessTheWord(letter) {
          manageReturn(data);
       },
       error : function(e) {
-         displayError('An error occurred!');
+         displayError(e.responseJSON);
       }
    });
 }
@@ -128,9 +132,11 @@ function gessTheWord(letter) {
 function manageReturn(data) {
    updateGameModel(data.model);
    if(data.outcome) {
+      lightBorder('green');
       displayResult('#feedback-ok');
    }
    else {
+      lightBorder('red');
       displayResult('#feedback-ko');
    }
 
@@ -153,15 +159,31 @@ function updateGameModel(model) {
 
 function displayResult(id) {
    $('.feedback').hide();
-   $(id).show().delay(2000).fadeOut();
+   $(id).show()
+   .delay(2000)
+   .fadeOut('fast');
 }
 
-function displayError(msg) {
-   $('#feedback').html(msg);
-   $('.feedback').hide(0);
+function displayError(response) {
+   lightBorder('red');
+   var errMsg = response.errCode
+   + " - System Error : "
+   + response.errMsg
+   + " at "
+   + response.errTime;
+
+   $('.feedback').hide();
+   $('#feedback').html(errMsg);
    $('#feedback').show();
 }
 
 function revealHiddenWord(wtg) {
    $('#hiddenWord').html(wtg.split('').join(' '));
+}
+
+function lightBorder(color){
+   $('#central-container').addClass(color+'-border-highlight');
+   window.setTimeout(function() {
+      $('#central-container').removeClass(color+'-border-highlight');
+   }, 2000);
 }
