@@ -49,7 +49,8 @@
                   <span id="feedback" class="feedback hidden"></span> <span
                      id="feedback-ok" class="feedback hidden">Good
                      :)</span> <span id="feedback-ko" class="feedback hidden">Wrong
-                     :(</span>
+                     :(</span> <span id="feedback-already-used"
+                     class="feedback hidden">Already used</span>
                </div>
             </div>
             <div class="row">

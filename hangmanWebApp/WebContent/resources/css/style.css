@@ -65,7 +65,7 @@ input.two-letter {
 .row {
    display: block;
    width: auto;
-   min-height: 30px;
+   min-height: 40px;
    padding: 6px;
 }
 

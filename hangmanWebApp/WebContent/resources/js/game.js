@@ -72,18 +72,33 @@ function verifyInput(e) {
    var code = e.keyCode || e.which;
    var chr = $(this).val();
 
-   if(code == 13 && chr != "") {
+   if(code == 8 || code == 46) {
+      $(this).val('');
+   }
+   else if(code == 13 && chr != "") {
       gessTheWord(chr);
-      return;
    }
    //65-90
    else if(code >= 65 && code <= 90) {
-      $(this).val(String.fromCharCode(code).toUpperCase()); 
+      var l = String.fromCharCode(code).toUpperCase();
+      if(isNewLetter(l))
+         $(this).val(l);
+      else {
+         displayResult('#feedback-already-used');
+      }
    }
    
    e.preventDefault();
    e.stopPropagation();
    return null;
+}
+
+function isNewLetter(letter) {
+   var m = (gameModel.misses.indexOf(letter) < 0);
+   var h = ($.inArray(letter, gameModel.hiddenWord) < 0);
+   if(m && h)
+      return true;
+   return false;
 }
 
 function gessTheWord(letter) {
@@ -137,7 +152,7 @@ function updateGameModel(model) {
 }
 
 function displayResult(id) {
-   $('.feedback').hide(1);
+   $('.feedback').hide();
    $(id).show().delay(2000).fadeOut();
 }
 

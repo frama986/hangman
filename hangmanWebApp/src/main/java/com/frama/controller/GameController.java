@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.frama.data.Words;
 import com.frama.model.GameModel;
 import com.frama.model.VerificationModel;
 import com.frama.model.VerificationResponseModel;
@@ -18,6 +19,8 @@ import com.frama.model.VerificationResponseModel;
 public class GameController {
    
    private static final Logger logger = LoggerFactory.getLogger(GameController.class);
+   
+   private static Integer attempts = 6; 
    
    @RequestMapping(value="/newgame", method=RequestMethod.POST)
    public GameModel newGame(HttpServletRequest request) {
@@ -52,7 +55,7 @@ public class GameController {
       
       if(isNew || gm == null || isSolved(gm) || isGameOver(gm)) {
          logger.debug("[generateGameModel] Creation of new game model");
-         gm = new GameModel("BRIDGE", 6);
+         gm = new GameModel(Words.getRandomWord(), attempts);
          session.setAttribute("gameModel", gm);
       }
       
