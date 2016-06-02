@@ -38,6 +38,7 @@ public class ErrorInfo {
    public ErrorInfo(String errCode, String errMsg) {
       this.errCode = errCode;
       this.errMsg = errMsg;
-      this.errTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
+      this.errTime = 
+            new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
    }
 }
