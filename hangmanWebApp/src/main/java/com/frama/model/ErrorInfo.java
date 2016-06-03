@@ -3,6 +3,9 @@ package com.frama.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Class that maps the return used after exception raising.
+ */
 public class ErrorInfo {
 
    private String errCode;

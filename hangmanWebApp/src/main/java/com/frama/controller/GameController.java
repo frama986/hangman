@@ -36,21 +36,37 @@ public class GameController {
    
    private final static String cookieKey = "HMGameModel";
 
+   /**
+    * Starts a new fresh game and saves it using cookies.
+    * 
+    * @param request http request
+    * @param response http response
+    * @return the game model
+    */
    @RequestMapping(value="/newgame", method=RequestMethod.POST)
    public GameModel newGame(HttpServletRequest request, HttpServletResponse response) {
       logger.debug("[newGame] Request manager.");
       GameModel gm = generateGameModel(request, true);
-      setCookie(gm, response);
+      saveGameCookie(gm, response);
       return gm;
    }
-
+   
+   /**
+    * Loads an existing game from cookies or session,
+    * if it is not present creates a new game.
+    * 
+    * @param gameModelString
+    * @param request
+    * @param response
+    * @return the game model
+    */
    @RequestMapping(value="/loadgame", method=RequestMethod.POST)
    public GameModel loadGame(
          @CookieValue(value = cookieKey, defaultValue="") String gameModelString, HttpServletRequest request, HttpServletResponse response) {
       
       logger.debug("[loadGame] Request manager.");
 
-      GameModel gm = getCookie(gameModelString, response);
+      GameModel gm = loadFromCookie(gameModelString, response);
       if(gm != null) {
          request.getSession().setAttribute("gameModel", gm);
          return gm;
@@ -59,6 +75,16 @@ public class GameController {
       return generateGameModel(request, false);
    }
 
+   /**
+    * Checks if the letter belongs to the word to guess
+    * and then saves the new game status using cookies.
+    * 
+    * @param vm object containing the letter
+    * @param request http request
+    * @param response http response
+    * @return object with the returns information, plus the updated game model
+    * @throws Exception
+    */
    @RequestMapping(value="/guess", method=RequestMethod.POST)
    public VerificationResponseModel guessTheLetter(
          @RequestBody VerificationModel vm, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -66,11 +92,17 @@ public class GameController {
       logger.debug("[guessTheLetter] Request manager.");
       
       VerificationResponseModel vrm = wordProcessing(vm, request);
-      setCookie(vrm.getModel(), response);
+      saveGameCookie(vrm.getModel(), response);
       
       return vrm;
    }
    
+   /**
+    * Handles the exceptions for RESTful request.
+    * It logs the error and returns an object containing the information to be displayed.
+    * @param ex the raised exception
+    * @return error object
+    */
    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
    @ExceptionHandler(Exception.class)
    @ResponseBody
@@ -83,10 +115,10 @@ public class GameController {
    }
 
    /**
-    * 
-    * @param request
-    * @param isNew
-    * @return
+    * Loads or creates a new game model.
+    * @param request http request
+    * @param isNew if true forces the creation of a new game model
+    * @return the game model
     */
    private GameModel generateGameModel(HttpServletRequest request, Boolean isNew) {
 
@@ -105,10 +137,10 @@ public class GameController {
    }
 
    /**
-    * 
-    * @param vm
-    * @param request
-    * @return
+    * Tests the letter and updates the model accordingly with the game status.
+    * @param vm object containing the letter
+    * @param request http request
+    * @return object with the returns information, plus the updated game model
     * @throws Exception 
     */
    private VerificationResponseModel wordProcessing(VerificationModel vm, HttpServletRequest request) throws Exception {
@@ -152,15 +184,20 @@ public class GameController {
       return vrm;
    }
 
+   /**
+    * Validates the letter.
+    * @param letter the letter
+    * @return true if letter is valid, false otherwise
+    */
    private Boolean letterValidation(String letter) {
       return letter.matches("[A-Z]{1}");
    }
 
    /**
-    * 
-    * @param letter
-    * @param gm
-    * @return
+    * Checks if the letter belongs to the word to guess.
+    * @param letter the letter
+    * @param gm the game model
+    * @return true if the letter belongs to the word, false otherwise
     */
    private Boolean letterDetection(String letter, GameModel gm) {
 
@@ -184,12 +221,23 @@ public class GameController {
       return outcome;
    }
 
+   /**
+    * Checks if the game is over (no more attempts).
+    * @param gm the game model
+    * @return true if the game is over, false otherwise
+    */
    private Boolean isGameOver(GameModel gm) {
       if(gm.getAttempts() < 1)
          return true;
       else return false;
    }
 
+   /**
+    * Checks if the game is solved (resolved the hidden word).
+    * 
+    * @param gm the game model
+    * @return true if the game is solved, false otherwise
+    */
    private Boolean isSolved(GameModel gm) {
       String[] hwa = gm.getHiddenWord();
       for(String w : hwa) {
@@ -199,7 +247,13 @@ public class GameController {
       return true;
    }
 
-   private void setCookie(GameModel gm, HttpServletResponse response) {
+   /**
+    * Saves the game status using cookies.
+    * 
+    * @param gm the game model to be saved
+    * @param response http response
+    */
+   private void saveGameCookie(GameModel gm, HttpServletResponse response) {
 
       ObjectMapper mapper = new ObjectMapper();
       String gameModelString;
@@ -210,11 +264,18 @@ public class GameController {
          cookie.setMaxAge(86400);
          response.addCookie(cookie);
       } catch (JsonProcessingException e) {
-         logger.error("[setCookie] Error during cookie generation", e);
+         logger.error("[saveGameWithCookie] Error during cookie generation", e);
       }
    }
 
-   private GameModel getCookie(String gameModelString, HttpServletResponse response) {
+   /**
+    * Loads the game status from cookies.
+    * 
+    * @param gameModelString the value of cookie 
+    * @param response http response
+    * @return the game model
+    */
+   private GameModel loadFromCookie(String gameModelString, HttpServletResponse response) {
       
       if(gameModelString == null || gameModelString == "")
          return null;
@@ -223,7 +284,7 @@ public class GameController {
       try {
          return mapper.readValue(gameModelString, GameModel.class);
       } catch (IOException e) {
-         logger.error("[getCookie] Error during cookie fetching", e);
+         logger.error("[loadFromCookie] Error during cookie fetching", e);
       }
       return null;
    }

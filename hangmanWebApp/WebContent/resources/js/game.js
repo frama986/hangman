@@ -1,9 +1,13 @@
 /**
- * 
+ * Game engine
  */
 
+// Game model
 var gameModel = null;
 
+/**
+ * On load function.
+ */
 $(function() {
 
    initGameModel();
@@ -12,11 +16,18 @@ $(function() {
    $('#newGameButton').click(newGame);
 });
 
+/**
+ * Initializes the game.
+ */
 function initGameModel() {
    var obj = {};
    loadGame(obj);
 }
 
+/**
+ * Loads the game.
+ * @param obj
+ */
 function loadGame(obj) {
 
    $.ajax({
@@ -35,6 +46,9 @@ function loadGame(obj) {
    });
 }
 
+/**
+ * Creates a new game.
+ */
 function newGame() {
 
    $('.feedback').hide();
@@ -56,6 +70,10 @@ function newGame() {
    });
 }
 
+/**
+ * Initialize the javascript game model.
+ * @param data model received from the server
+ */
 function initializeModel(data) {
    gameModel = {};
    $.extend(gameModel, data);
@@ -63,6 +81,9 @@ function initializeModel(data) {
    updatePageFileds();
 }
 
+/**
+ * Updates the fields in page.
+ */
 function updatePageFileds() {
    $('#attempts').html(gameModel.attempts);
    $('#errors').html(gameModel.errors);
@@ -72,6 +93,11 @@ function updatePageFileds() {
    $('#guessLetter').val('');
 }
 
+/**
+ * Verifies the input character.
+ * @param e
+ * @returns
+ */
 function verifyInput(e) {
    var code = e.keyCode || e.which;
    var chr = $(this).val();
@@ -97,6 +123,11 @@ function verifyInput(e) {
    return null;
 }
 
+/**
+ * Checks if the letter has already been used.
+ * @param letter
+ * @returns {Boolean}
+ */
 function isNewLetter(letter) {
    var m = (gameModel.misses.indexOf(letter) < 0);
    var h = ($.inArray(letter, gameModel.hiddenWord) < 0);
@@ -105,6 +136,10 @@ function isNewLetter(letter) {
    return false;
 }
 
+/**
+ * Submit the letter.
+ * @param letter
+ */
 function gessTheWord(letter) {
 
    var obj = {letter : letter};
@@ -126,7 +161,7 @@ function gessTheWord(letter) {
 }
 
 /**
- * Manages the return from the letter verification
+ * Manages the return from the letter verification.
  * @param data : object {letter, model, outcome}
  */
 function manageReturn(data) {
@@ -153,10 +188,18 @@ function manageReturn(data) {
    }
 }
 
+/**
+ * Updates the game model after status has changed.
+ * @param model
+ */
 function updateGameModel(model) {
    initializeModel(model);
 }
 
+/**
+ * Displays the outcome of request.
+ * @param id
+ */
 function displayResult(id) {
    $('.feedback').hide();
    $(id).show()
@@ -164,6 +207,10 @@ function displayResult(id) {
    .fadeOut('fast');
 }
 
+/**
+ * Displays errors messages.
+ * @param response
+ */
 function displayError(response) {
    lightBorder('red');
    var errMsg = response.errCode
@@ -177,10 +224,18 @@ function displayError(response) {
    $('#feedback').show();
 }
 
+/**
+ * Shows the word to guess.
+ * @param wtg
+ */
 function revealHiddenWord(wtg) {
    $('#hiddenWord').html(wtg.split('').join(' '));
 }
 
+/**
+ * Highlights the borders.
+ * @param color
+ */
 function lightBorder(color){
    $('#central-container').addClass(color+'-border-highlight');
    window.setTimeout(function() {

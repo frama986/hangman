@@ -1,5 +1,8 @@
 package com.frama.model;
 
+/**
+ * Class that maps the return of guess request
+ */
 public class VerificationResponseModel {
    
    private GameModel model;
@@ -51,5 +54,4 @@ public class VerificationResponseModel {
    public void setLetter(String letter) {
       this.letter = letter;
    }
-   
 }

@@ -2,6 +2,9 @@ package com.frama.model;
 
 import java.io.Serializable;
 
+/**
+ * Class that represent the status of the game.
+ */
 public class GameModel implements Serializable{
    
    private static final long serialVersionUID = -4911780008466057971L;
