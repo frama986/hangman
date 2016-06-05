@@ -13,15 +13,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.frama.controller.GameController;
 import com.frama.model.GameModel;
 
+/**
+ * Class for unit test of Game Controller.
+ * This class tests all principal status changes due to submission of a letter giving a specific game model.
+ * Other possible test cases can be on:
+ *  - creating, saving and loading of the game model
+ *  - testing letter validation with a range of possible character submission
+ */
 public class GameControllerTest {
 
    private MockMvc mockMvc;
 
    @Before
    public void setup() {
+      // Registers the controller to be tested
       mockMvc = MockMvcBuilders.standaloneSetup(new GameController()).build();
    }
 
+   /**
+    * Test the guessed letter case.
+    * @throws Exception
+    */
    @Test
    public void testGuessTheLetter_guess() throws Exception {
 
@@ -42,6 +54,10 @@ public class GameControllerTest {
       .andExpect(jsonPath("$.solved").value(false));
    }
 
+   /**
+    * Test the missed letter case.
+    * @throws Exception
+    */
    @Test
    public void testGuessTheLetter_miss() throws Exception {
 
@@ -62,6 +78,10 @@ public class GameControllerTest {
       .andExpect(jsonPath("$.solved").value(false));
    }
 
+   /**
+    * Tests the game over case but not solved.
+    * @throws Exception
+    */
    @Test
    public void testGuessTheLetter_gameOver() throws Exception {
 
@@ -82,6 +102,10 @@ public class GameControllerTest {
       .andExpect(jsonPath("$.solved").value(false));
    }
 
+   /**
+    * Tests the case in which the game is solved.
+    * @throws Exception
+    */
    @Test
    public void testGuessTheLetter_solved() throws Exception {
 
@@ -102,6 +126,10 @@ public class GameControllerTest {
       .andExpect(jsonPath("$.solved").value(true));
    }
 
+   /**
+    * Tests the validation of a wrong letter.
+    * @throws Exception
+    */
    @Test
    public void testGuessTheLetter_letterValidation() throws Exception {
 

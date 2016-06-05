@@ -112,6 +112,7 @@
             <artifactId>maven-war-plugin</artifactId>
             <version>2.6</version>
             <configuration>
+               <warName>hangman</warName>
                <warSourceDirectory>WebContent</warSourceDirectory>
                <failOnMissingWebXml>false</failOnMissingWebXml>
                <outputDirectory>C:\Users\f.malatto\Documents\Personali\Applicazioni\apache-tomcat-8.0.35\webapps</outputDirectory>

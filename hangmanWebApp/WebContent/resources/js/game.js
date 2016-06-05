@@ -13,6 +13,7 @@ $(function() {
    initGameModel();
 
    $('#guessLetter').keydown(verifyInput);
+   $('#guessButton').click(guessTheLetter);
    $('#newGameButton').click(newGame);
 });
 
@@ -94,19 +95,21 @@ function updatePageFileds() {
 }
 
 /**
- * Verifies the input character.
- * @param e
+ * Verifies the input character before being written in the text field.
+ * If the character is ok writes the character.
+ * @param e the keydown event
  * @returns
  */
 function verifyInput(e) {
    var code = e.keyCode || e.which;
-   var chr = $(this).val();
 
+   // Delete or Backspace
    if(code == 8 || code == 46) {
       $(this).val('');
    }
-   else if(code == 13 && chr != "") {
-      gessTheWord(chr);
+   // Enter
+   else if(code == 13) {
+      guessTheLetter();
    }
    //65-90
    else if(code >= 65 && code <= 90) {
@@ -121,6 +124,19 @@ function verifyInput(e) {
    e.preventDefault();
    e.stopPropagation();
    return null;
+}
+
+/**
+ * If the input fields is not null submits the letter.
+ */
+function guessTheLetter() {
+   var chr = $('#guessLetter').val();
+   
+   if(chr != null && chr != '') {
+      submitLetter(chr);
+   }
+   // Restore focus on input field
+   $('#guessLetter').focus();
 }
 
 /**
@@ -140,7 +156,7 @@ function isNewLetter(letter) {
  * Submit the letter.
  * @param letter
  */
-function gessTheWord(letter) {
+function submitLetter(letter) {
 
    var obj = {letter : letter};
 
