@@ -256,9 +256,8 @@ public class GameController {
    private void saveGameCookie(GameModel gm, HttpServletResponse response) {
 
       ObjectMapper mapper = new ObjectMapper();
-      String gameModelString;
       try {
-         gameModelString = mapper.writeValueAsString(gm);
+         String gameModelString = mapper.writeValueAsString(gm);
          Cookie cookie = new Cookie(cookieKey, gameModelString);
          cookie.setPath("/");
          cookie.setMaxAge(86400);
